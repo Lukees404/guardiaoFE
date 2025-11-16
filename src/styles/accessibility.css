@@ -1,0 +1,31 @@
+/* ===================================
+   ESTILOS DE ACESSIBILIDADE
+   Scrollbar customizada para idosos
+   =================================== */
+
+/* NAVEGADORES WEBKIT (Chrome, Safari, Edge) */
+.chat-window::-webkit-scrollbar {
+  width: 16px;
+}
+
+.chat-window::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 8px;
+}
+
+.chat-window::-webkit-scrollbar-thumb {
+  background: #3A7DFF;
+  border-radius: 8px;
+  border: 3px solid #F1F5F9;
+}
+
+.chat-window::-webkit-scrollbar-thumb:hover {
+  background: #2563EB;
+  cursor: pointer;
+}
+
+/* FIREFOX */
+.chat-window {
+  scrollbar-width: thick;
+  scrollbar-color: #3A7DFF #F1F5F9;
+}
