@@ -17,8 +17,8 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, sender, timestam
       return <p className="text-lg leading-relaxed whitespace-pre-wrap">{message}</p>;
     }
 
-    // Converte Markdown para HTML
-    const rawHTML = marked(message);
+    // Converte Markdown para HTML (parse retorna string de forma síncrona)
+    const rawHTML = marked.parse(message, { async: false }) as string;
     // Sanitiza o HTML para segurança
     const cleanHTML = DOMPurify.sanitize(rawHTML);
 
