@@ -1,14 +1,12 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 
-export default function Signup() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+export default function NewPassword() {
+  const [code, setCode] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,44 +14,36 @@ export default function Signup() {
       alert("As senhas não coincidem!");
       return;
     }
-    if (name && email && password) {
-      // Mock signup & login
-      login(name, email);
-      navigate('/');
+    if (code && password) {
+      // Mock password reset
+      console.log('Password reset successfully');
+      navigate('/login');
     }
   };
 
   return (
     <>
-      <h1 className="text-3xl font-semibold text-center text-guardiao-cinza-escuro mb-6">
-        Crie sua conta
+      <h1 className="text-3xl font-semibold text-center text-guardiao-cinza-escuro mb-2">
+        Crie sua nova senha
       </h1>
+      <p className="text-center text-guardiao-cinza-medio mb-6">
+        Enviamos um código de 6 dígitos para o seu e-mail. Por favor, insira o código e sua nova senha.
+      </p>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-lg font-medium mb-2 text-guardiao-cinza-escuro">Seu Nome:</label>
+          <label className="block text-lg font-medium mb-2 text-guardiao-cinza-escuro">Código de Verificação:</label>
           <input
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
             className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-guardiao-branco focus:border-guardiao-azul focus:outline-none text-lg text-black"
-            placeholder="Nome Completo"
+            placeholder="123456"
             required
           />
         </div>
         <div>
-          <label className="block text-lg font-medium mb-2 text-guardiao-cinza-escuro">Seu Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-guardiao-branco focus:border-guardiao-azul focus:outline-none text-lg text-black"
-            placeholder="seu@email.com"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-lg font-medium mb-2 text-guardiao-cinza-escuro">Sua Senha:</label>
+          <label className="block text-lg font-medium mb-2 text-guardiao-cinza-escuro">Sua nova senha:</label>
           <input
             type="password"
             value={password}
@@ -64,7 +54,7 @@ export default function Signup() {
           />
         </div>
         <div>
-          <label className="block text-lg font-medium mb-2 text-guardiao-cinza-escuro">Confirme sua Senha:</label>
+          <label className="block text-lg font-medium mb-2 text-guardiao-cinza-escuro">Confirme sua nova senha:</label>
           <input
             type="password"
             value={confirmPassword}
@@ -78,17 +68,16 @@ export default function Signup() {
           type="submit"
           className="w-full py-4 bg-guardiao-azul text-white text-lg font-semibold rounded-xl hover:bg-blue-600 transition-colors mt-6"
         >
-          Cadastrar
+          Salvar Nova Senha
         </button>
       </form>
 
       <div className="mt-6 text-center">
-        <span className="text-guardiao-cinza-medio">Já tem conta? </span>
         <Link 
-          to="/login" 
-          className="text-guardiao-azul hover:underline font-medium"
+          to="#" 
+          className="text-guardiao-cinza-medio hover:text-guardiao-azul"
         >
-          Faça Login
+          Não recebeu o código? Reenviar
         </Link>
       </div>
     </>

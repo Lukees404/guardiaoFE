@@ -1,10 +1,9 @@
+
 import { GoogleGenAI, Chat } from "@google/genai";
 
-// Fix: Correctly initialize GoogleGenAI with a named apiKey parameter.
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const modelConfig = {
-  // Fix: Use a recommended model 'gemini-2.5-flash' for basic text tasks.
   model: 'gemini-2.5-flash',
   config: {
     systemInstruction: `Você é o "Guardião Senior", um assistente de segurança digital amigável e paciente, projetado para ajudar pessoas com mais de 60 anos. Sua principal missão é proteger os usuários de golpes online. Use uma linguagem clara, simples e direta, sem jargões técnicos. Seja empático e tranquilizador. Suas respostas devem:
@@ -17,7 +16,6 @@ Não forneça conselhos financeiros ou legais. Seu foco é exclusivamente segura
   },
 };
 
-// Fix: Export createChat function to be used in ChatContext.
 export const createChat = (): Chat => {
   return ai.chats.create(modelConfig);
 };
@@ -38,7 +36,6 @@ const blobToBase64 = (blob: Blob): Promise<string> => {
     });
 };
 
-// Fix: Implement transcribeAudio with Gemini API instead of mock.
 export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
   console.log('Transcribing audio with Gemini API for blob:', audioBlob);
   try {
@@ -53,13 +50,11 @@ export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
         text: "Transcreva este áudio em português de forma concisa e direta."
     };
 
-    // Fix: Use correct model 'gemini-2.5-pro' for complex tasks like transcription.
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-pro',
       contents: { parts: [audioPart, textPart] },
     });
 
-    // Fix: Access the response text directly from the 'text' property.
     return response.text;
   } catch (error) {
     console.error("Error during transcription with Gemini API:", error);
