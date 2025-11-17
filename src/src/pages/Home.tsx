@@ -1,26 +1,19 @@
-
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../types';
 import { getChatResponse } from '../services/geminiService';
 import MessageBubble from '../components/MessageBubble';
 import ChatInput from '../components/ChatInput';
 import TypingIndicator from '../components/TypingIndicator';
 import WelcomeSuggestions from '../components/WelcomeSuggestions';
-import { useChat } from '../context/ChatContext';
-import LoadingScreen from '../components/LoadingScreen';
-import ChatHeader from '../components/ChatHeader';
 
 const Home: React.FC = () => {
-  const { messages, setMessages, isLoading, setIsLoading } = useChat();
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading]);
 
   const handleSendMessage = async (text: string) => {
     const userMessage: Message = {
@@ -54,30 +47,15 @@ const Home: React.FC = () => {
       setIsLoading(false);
     }
   };
-  
-  // 1. Initial Loading State
-  if (isLoading && messages.length === 0) {
-    return <LoadingScreen />;
-  }
 
-  // 2. Welcome State
-  if (messages.length === 0 && !isLoading) {
-    return (
-      <div className="flex flex-col h-full w-full max-w-4xl mx-auto justify-center">
-        <div className="mb-8">
-            <WelcomeSuggestions />
-        </div>
-        <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
-      </div>
-    );
-  }
-
-  // 3. Active Chat State
   return (
-    <div className="flex flex-col h-full w-full">
-      <ChatHeader />
-      <div className="flex-1 p-6 space-y-6 overflow-y-auto custom-scrollbar">
-        {messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)}
+    <div className="flex flex-col h-full w-full max-w-4xl mx-auto bg-guardiao-branco rounded-xl shadow-soft">
+      <div className="flex-1 p-6 space-y-6 overflow-y-auto">
+        {messages.length === 0 && !isLoading ? (
+          <WelcomeSuggestions />
+        ) : (
+          messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)
+        )}
         {isLoading && <TypingIndicator />}
         <div ref={messagesEndRef} />
       </div>
