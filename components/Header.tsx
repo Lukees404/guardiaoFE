@@ -1,11 +1,11 @@
 
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useChat } from '../context/ChatContext';
 import LogoIcon from './icons/LogoIcon';
 
 export default function Header() {
-  const { isAuthenticated } = useAuth();
+  const { resetChat } = useChat();
 
   const navLinkClass = ({ isActive }: { isActive: boolean }): string =>
     `text-lg font-medium ${
@@ -17,7 +17,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3" onClick={resetChat}>
             <LogoIcon className="h-10 w-10 text-guardiao-cinza-escuro" />
             <span className="text-2xl font-bold text-guardiao-cinza-escuro hidden sm:block">
               Guardião Senior
@@ -35,12 +35,12 @@ export default function Header() {
             <NavLink to="/sobre" className={navLinkClass}>
               Sobre
             </NavLink>
-            <Link
-              to={isAuthenticated ? "/configuracoes" : "/login"}
-              className="w-12 h-12 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors duration-200"
-              aria-label="Configurações"
+             <Link
+                to="/configuracoes"
+                className="w-12 h-12 flex items-center justify-center rounded-full text-guardiao-cinza-medio hover:bg-gray-200 transition-colors"
+                aria-label="Configurações"
             >
-              <i className="bi bi-gear text-2xl text-guardiao-cinza-medio"></i>
+                <i className="bi bi-gear-fill text-2xl"></i>
             </Link>
           </nav>
         </div>

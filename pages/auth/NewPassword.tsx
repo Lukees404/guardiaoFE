@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -37,7 +36,7 @@ export default function NewPassword() {
             type="text"
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-guardiao-azul focus:outline-none text-lg"
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-guardiao-branco focus:border-guardiao-azul focus:outline-none text-lg"
             placeholder="123456"
             required
           />
@@ -48,7 +47,7 @@ export default function NewPassword() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-guardiao-azul focus:outline-none text-lg"
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-guardiao-branco focus:border-guardiao-azul focus:outline-none text-lg"
             placeholder="••••••••"
             required
           />
@@ -59,7 +58,7 @@ export default function NewPassword() {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-guardiao-azul focus:outline-none text-lg"
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-guardiao-branco focus:border-guardiao-azul focus:outline-none text-lg"
             placeholder="••••••••"
             required
           />

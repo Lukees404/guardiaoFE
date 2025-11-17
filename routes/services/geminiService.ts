@@ -1,22 +1,20 @@
-import { GoogleGenAI, Chat } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const genAI = new GoogleGenerativeAI(process.env.API_KEY || "");
 
-const modelConfig = {
-  model: 'gemini-2.5-flash',
-  config: {
-    systemInstruction: `Você é o "Guardião Senior", um assistente de segurança digital amigável e paciente, projetado para ajudar pessoas com mais de 60 anos. Sua principal missão é proteger os usuários de golpes online. Use uma linguagem clara, simples e direta, sem jargões técnicos. Seja empático e tranquilizador. Suas respostas devem:
+const model = genAI.getGenerativeModel({
+  model: 'gemini-1.5-flash',
+  systemInstruction: `Você é o "Guardião Senior", um assistente de segurança digital amigável e paciente, projetado para ajudar pessoas com mais de 60 anos. Sua principal missão é proteger os usuários de golpes online. Use uma linguagem clara, simples e direta, sem jargões técnicos. Seja empático e tranquilizador. Suas respostas devem:
 1.  Identificar rapidamente se a situação descrita é um golpe.
 2.  Explicar de forma simples por que é um golpe.
 3.  Dar instruções claras e passo a passo sobre o que fazer (ex: "Não clique no link", "Apague a mensagem", "Bloqueie o número").
 4.  Reforçar que a culpa não é do usuário e que qualquer um pode ser alvo de golpes.
 5.  Ser sempre educado e respeitoso.
 Não forneça conselhos financeiros ou legais. Seu foco é exclusivamente segurança digital.`,
-  },
-};
+});
 
-export const createChat = (): Chat => {
-  return ai.chats.create(modelConfig);
+export const createChat = () => {
+  return model.startChat();
 };
 
 
@@ -49,12 +47,10 @@ export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
         text: "Transcreva este áudio em português de forma concisa e direta."
     };
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-pro',
-      contents: { parts: [audioPart, textPart] },
-    });
+    const transcriptionModel = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+    const response = await transcriptionModel.generateContent([audioPart, textPart]);
 
-    return response.text;
+    return response.response.text();
   } catch (error) {
     console.error("Error during transcription with Gemini API:", error);
     throw new Error("Falha ao transcrever o áudio.");

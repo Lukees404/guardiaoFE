@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { Message } from '../types';
 import MessageBubble from '../components/MessageBubble';
@@ -75,9 +74,9 @@ const Home: React.FC = () => {
   // 2. Welcome State
   if (messages.length === 0 && !isLoading) {
     return (
-      <div className="flex flex-col h-full w-full max-w-4xl mx-auto">
-        <div className="flex-1 flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8">
-          <WelcomeSuggestions />
+      <div className="flex flex-col h-full w-full max-w-4xl mx-auto justify-center">
+        <div className="mb-8">
+            <WelcomeSuggestions />
         </div>
         <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
       </div>

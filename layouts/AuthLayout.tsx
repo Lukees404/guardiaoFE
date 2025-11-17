@@ -16,6 +16,15 @@ export default function AuthLayout() {
         <div className="bg-guardiao-branco p-8 rounded-xl shadow-soft">
             <Outlet />
         </div>
+        <div className="mt-8 text-center">
+            <Link 
+              to="/" 
+              className="inline-flex items-center gap-2 text-guardiao-cinza-medio hover:text-guardiao-azul transition-colors font-medium text-lg"
+            >
+              <i className="bi bi-arrow-left"></i>
+              <span>Voltar para a página inicial</span>
+            </Link>
+        </div>
       </div>
     </div>
   );
