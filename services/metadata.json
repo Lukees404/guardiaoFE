@@ -1,0 +1,7 @@
+{
+  "name": "Guardião Senior",
+  "description": "A digital security assistant designed to be easy to use for people over 60, offering a safe environment to ask questions about online scams and security.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
