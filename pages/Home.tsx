@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../types';
 import { getChatResponse } from '../services/geminiService';
@@ -14,6 +15,10 @@ const Home: React.FC = () => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
 
   const handleSendMessage = async (text: string) => {
     const userMessage: Message = {
@@ -48,14 +53,21 @@ const Home: React.FC = () => {
     }
   };
 
+  if (messages.length === 0 && !isLoading) {
+    return (
+      <div className="flex flex-col h-full w-full max-w-4xl mx-auto justify-end">
+        <div className="flex-1 flex items-center justify-center">
+          <WelcomeSuggestions />
+        </div>
+        <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full w-full max-w-4xl mx-auto bg-guardiao-branco rounded-xl shadow-soft">
-      <div className="flex-1 p-6 space-y-6 overflow-y-auto">
-        {messages.length === 0 && !isLoading ? (
-          <WelcomeSuggestions />
-        ) : (
-          messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)
-        )}
+      <div className="flex-1 p-6 space-y-6 overflow-y-auto custom-scrollbar">
+        {messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)}
         {isLoading && <TypingIndicator />}
         <div ref={messagesEndRef} />
       </div>
